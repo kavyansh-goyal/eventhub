@@ -9,7 +9,10 @@ const MyTickets = () => {
   const fetchTickets = async () => {
     try {
       const { data } = await api.get("/registrations/mine");
-      setTickets(data);
+      setTickets(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setTickets([]);
     } finally {
       setLoading(false);
     }

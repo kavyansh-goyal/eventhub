@@ -10,7 +10,10 @@ const Dashboard = () => {
     (async () => {
       try {
         const { data } = await api.get("/events/mine/list");
-        setEvents(data);
+        setEvents(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error(err);
+        setEvents([]);
       } finally {
         setLoading(false);
       }

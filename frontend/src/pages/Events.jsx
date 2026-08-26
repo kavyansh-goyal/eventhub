@@ -11,9 +11,10 @@ const Events = () => {
     setLoading(true);
     try {
       const { data } = await api.get(`/events${query ? `?search=${query}` : ""}`);
-      setEvents(data);
+      setEvents(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setEvents([]);
     } finally {
       setLoading(false);
     }
