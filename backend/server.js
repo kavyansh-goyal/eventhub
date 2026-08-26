@@ -1,6 +1,7 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
+
+import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
@@ -18,7 +19,12 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors({ origin: process.env.CLIENT_URL || "*", credentials: true }));
+// FIXED: Removed "*" fallback to prevent CORS credential errors
+app.use(cors({ 
+    origin: process.env.CLIENT_URL || "https://eventhub-two-kohl.vercel.app", 
+    credentials: true 
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
